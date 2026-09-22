@@ -71,3 +71,126 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## Credenciales
 - Email: admin@example.com
 - Password: password
+
+# Mini CRUD - Laravel + Inertia + Vue
+
+## Requisitos previos
+
+- Docker Desktop instalado ([descargar](https://www.docker.com/products/docker-desktop))
+- Git instalado
+
+## Instalación y ejecución
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/tu-usuario/mini-crud.git
+cd mini-crud
+```
+
+### 2. Copiar el archivo de entorno
+
+```bash
+cp .env.example .env
+```
+
+### 3. Levantar los contenedores
+
+```bash
+docker compose up -d --build
+```
+
+### 4. Instalar dependencias de Composer
+
+```bash
+docker compose exec backend composer install
+```
+
+### 5. Generar la clave de la aplicación
+
+```bash
+docker compose exec backend php artisan key:generate
+```
+
+### 6. Ejecutar migraciones y seeders
+
+```bash
+docker compose exec backend php artisan migrate --seed
+```
+
+### 7. Acceder a la aplicación
+
+- **Aplicación:** http://localhost:8080
+- **Vite (frontend):** http://localhost:5173
+
+## Comandos útiles
+
+### Ver logs del backend
+
+```bash
+docker compose logs -f backend
+```
+
+### Ejecutar pruebas
+
+```bash
+docker compose exec backend php artisan test
+```
+
+### Detener los contenedores
+
+```bash
+docker compose down
+```
+
+### Reiniciar los contenedores
+
+```bash
+docker compose restart
+```
+
+### Eliminar volúmenes (borra la base de datos)
+
+```bash
+docker compose down -v
+```
+
+## Credenciales de prueba
+
+- **Email:** admin@example.com
+- **Password:** password
+
+## Estructura de servicios
+
+| Servicio | Puerto | URL |
+|----------|--------|-----|
+| Nginx | 8080 | http://localhost:8080 |
+| Vite | 5173 | http://localhost:5173 |
+| MySQL | 3307 | (interno) |
+
+## Solución de problemas
+
+### Error: "port is already allocated"
+
+Cambia los puertos en `docker-compose.yml`:
+
+```yaml
+ports:
+  - "8081:80"  # En lugar de 8080
+```
+
+### Error: "Cannot connect to MySQL"
+
+Espera unos segundos a que MySQL inicie completamente:
+
+```bash
+docker compose logs mysql
+```
+
+### Error: "Vite no carga"
+
+Verifica que el contenedor `frontend` esté corriendo:
+
+```bash
+docker compose ps
+```

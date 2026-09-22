@@ -9,3 +9,5 @@ storage/framework/sessions/*
 storage/framework/views/*
 public/build
 public/storage
+docker-compose.yml
+README.md
